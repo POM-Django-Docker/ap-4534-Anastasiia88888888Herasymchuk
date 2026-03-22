@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>
+    User's profile:
+    {% if user.role >= 1 or user.id == target_user.id %}
+        {{ target_user.email }}
+    {% else %}
+        {{ target_user.first_name }} {{ target_user.last_name }}
+    {% endif %}
+</h2>
+
+<div class="user-card">
+    <ul>
+        <li><strong>ID:</strong> {{ target_user.id }}</li>
+        <li><strong>Full name:</strong> {{ target_user.last_name }} {{ target_user.first_name }} {{ target_user.middle_name|default:"" }}</li>
+        <li><strong>Role:</strong> {{ target_user.get_role_name }}</li>
+
+        {% if user.role >= 1 or user.id == target_user.id %}
+            <li><strong>Registration data:</strong> {{ target_user.created_at|date:"d.m.Y H:i" }}</li>
+            <li><strong>Status:</strong>
+                <span class="status-{% if target_user.is_active %}active{% else %}blocked{% endif %}">
+                    {% if target_user.is_active %} Active {% else %} Blocked {% endif %}
+                </span>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="actions">
+    <a href="{% url 'user:index' %}" class="btn">Back to the list</a>
+
+    {% if user.role >= 1 or user.id == target_user.id %}
+        <a href="#" class="btn btn-edit">Edit Profile</a>
+    {% endif %}
+</div>
+{% endblock %}

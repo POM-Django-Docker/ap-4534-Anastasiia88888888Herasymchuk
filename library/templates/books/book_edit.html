@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ book.name }}{% endblock %}
+
+{% block content %}
+<h2>Edit Book: {{ book.name }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <p>Name: <input type="text" name="name" value="{{ book.name }}"></p>
+    <p>Description: <input type="text" name="description" value="{{ book.description }}"></p>
+    <p>Count: <input type="number" name="count" value="{{ book.count }}"></p>
+
+    <p>Authors:</p>
+    {% for author in authors %}
+        <label>
+            <input type="checkbox" name="authors" value="{{ author.id }}"
+                   {% if author in book.authors.all %}checked{% endif %}>
+            {{ author.name }}
+        </label><br>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+
+<p><a href="{% url 'book:book_detail' book.pk %}">Back to book</a></p>
+{% endblock %}

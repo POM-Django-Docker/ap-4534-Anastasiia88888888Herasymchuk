@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Books{% endblock %}
+
+{% block content %}
+<h2>Books</h2>
+
+<a href="{% url 'book:book_create' %}" class="btn btn-success mb-3">Create Book</a>
+<form method="get" class="row g-3 mb-4 filter-light" >
+
+    <div class="col-md-4">
+        <input type="text" name="name" class="form-control"
+               placeholder="Search by name"
+               value="{{ request.GET.name }}">
+    </div>
+
+    <div class="col-md-4">
+        <select name="author" class="form-select">
+            <option value="">All authors</option>
+            {% for author in authors %}
+                <option value="{{ author.id }}"
+                        {% if request.GET.author == author.id|stringformat:"s" %}selected{% endif %}>
+                    {{ author.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <input type="number" name="min_count" class="form-control"
+               placeholder="Min count"
+               value="{{ request.GET.min_count }}">
+    </div>
+
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100">Filter</button>
+    </div>
+
+</form>
+
+<table class="table table-dark table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Count</th>
+        <th>Authors</th>
+        <th></th>
+    </tr>
+
+    {% for book in books %}
+    <tr>
+        <td>{{ book.pk }}</td>
+        <td>{{ book.name }}</td>
+        <td>{{ book.count }}</td>
+        <td>
+            {% for author in book.authors.all %}
+                {{ author.name }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                No authors
+            {% endfor %}
+        </td>
+        <td>
+            <a href="{% url 'book:book_detail' book.pk %}" class="btn btn-primary btn-sm">View</a>
+            <a href="{% url 'book:book_edit' book.pk %}" class="btn btn-warning btn-sm">Edit</a>
+
+            <!-- Delete modal trigger -->
+            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ book.pk }}">
+                Delete
+            </button>
+        </td>
+    </tr>
+
+    <!-- Delete Modal for this book -->
+    <div class="modal fade" id="deleteModal{{ book.pk }}" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Delete {{ book.name }}?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            Are you sure you want to delete <strong>{{ book.name }}</strong>? This action cannot be undone.
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+            <form method="post" action="{% url 'book:book_delete' book.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes, delete</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+</table>
+{% endblock %}

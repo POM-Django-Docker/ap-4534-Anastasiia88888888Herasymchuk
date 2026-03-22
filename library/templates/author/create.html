@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Author{% endblock %}
+
+{% block content %}
+    <h2>Add New Author</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <p>
+            <label>First Name:</label><br>
+            <input type="text" name="name" maxlength="20" required>
+        </p>
+
+        <p>
+            <label>Last Name:</label><br>
+            <input type="text" name="surname" maxlength="20" required>
+        </p>
+
+        <p>
+            <label>Patronymic:</label><br>
+            <input type="text" name="patronymic" maxlength="20">
+        </p>
+
+        <button type="submit">Save</button>
+        <a href="{% url 'author:index' %}">Back to list</a>
+    </form>
+{% endblock %}

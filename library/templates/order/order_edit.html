@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Edit Order{% endblock %}
+
+{% block content %}
+<h2>Edit Order</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">Planned return</label>
+        <input type="datetime-local" name="plated_end_at" class="form-control"
+               value="{{ order.plated_end_at|date:'Y-m-d\\TH:i' }}">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Actual return</label>
+        <input type="datetime-local" name="end_at" class="form-control"
+               value="{{ order.end_at|date:'Y-m-d\\TH:i' }}">
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+<p><a href="{% url 'order:detail' order.pk %}">Back to order</a></p>
+{% endblock %}

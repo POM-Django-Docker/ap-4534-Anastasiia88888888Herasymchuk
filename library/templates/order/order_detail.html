@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Order {{ order.pk }}{% endblock %}
+
+{% block content %}
+<h2>Order #{{ order.pk }}</h2>
+
+<p><strong>User:</strong> {{ order.user.email }}</p>
+<p><strong>Book:</strong> {{ order.book.name }}</p>
+<p><strong>Created:</strong> {{ order.created_at }}</p>
+<p><strong>Planned return:</strong> {{ order.plated_end_at }}</p>
+<p><strong>Returned:</strong> {{ order.end_at|default:"Not returned" }}</p>
+
+<a href="{% url 'order:edit' order.pk %}" class="btn btn-primary">Edit</a>
+<!-- Delete Button (opens modal) -->
+<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ order.pk }}">
+    Delete
+</button>
+<p><a href="{% url 'order:index' %}">← Back to orders</a></p>
+ <div class="modal fade" id="deleteModal{{ order.pk }}" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Delete {{ order.name }}?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            Are you sure you want to delete <strong>{{ order.name }}</strong>? This action cannot be undone.
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+            <form method="post" action="{% url 'order:delete' order.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes, delete</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

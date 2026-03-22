@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Create Order{% endblock %}
+
+{% block content %}
+<h2>Create Order</h2>
+
+<form method="post" class="mt-3">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">User</label>
+        <select name="user" class="selectpicker form-select" data-live-search="true" data-style="btn-dark">
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Book</label>
+        <select name="book" class="selectpicker form-select" data-live-search="true" data-style="btn-dark">
+            {% for book in books %}
+                <option value="{{ book.id }}">{{ book.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Planned return date</label>
+
+        {# створюємо змінну з поточним часом у правильному форматі #}
+        {% now "Y-m-d\TH:i" as current_datetime %}
+
+        <input type="datetime-local"
+               name="plated_end_at"
+               class="form-control"
+               value="{{ current_datetime }}">
+    </div>
+
+    <button type="submit" class="btn btn-success">Create</button>
+</form>
+
+<p><a href="{% url 'order:index' %}">← Back to orders</a></p>
+{% endblock %}

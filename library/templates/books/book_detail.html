@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.name }}{% endblock %}
+
+{% block content %}
+<h2>Book #{{ book.pk }}</h2>
+<p><strong>Name:</strong> {{ book.name }}</p>
+<p><strong>Description:</strong> {{ book.description }}</p>
+<p><strong>Count:</strong> {{ book.count }}</p>
+<p><strong>Authors:</strong> {% for author in book.authors.all %}
+                {{ author.name }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                No authors
+            {% endfor %}</p>
+    <a href="{% url 'book:book_edit' book.pk %}" class="btn btn-primary">Edit</a>
+
+
+<!-- Delete Button (opens modal) -->
+<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+    Delete
+</button>
+
+<p>
+    <a href="{% url 'book:index' %}">← Back to books</a>
+</p>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete {{ book.name }}?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        Are you sure you want to delete <strong>{{ book.name }}</strong>? This action cannot be undone.
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+        <form method="post" action="{% url 'book:book_delete' book.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

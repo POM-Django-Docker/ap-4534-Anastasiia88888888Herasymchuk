@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Create Book{% endblock %}
+
+{% block content %}
+<h2>Create Book</h2>
+
+<form method="post" class="mt-3">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="name" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" name="description" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Count</label>
+        <input type="number" name="count" class="form-control">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Authors</label>
+    <select name="authors" class="selectpicker form-select" multiple data-live-search="true" data-style="btn-dark">
+        {% for author in authors %}
+            <option value="{{ author.id }}">{{ author.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+
+
+    <button type="submit" class="btn btn-success">Create</button>
+</form>
+
+
+
+<p><a href="{% url 'book:index' %}">← Back to books</a></p>
+{% endblock %}

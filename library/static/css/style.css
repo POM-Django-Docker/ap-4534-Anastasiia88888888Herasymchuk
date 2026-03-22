@@ -1,0 +1,241 @@
+:root {
+    --bg-color: #282a36;
+    --surface-color: #343746;
+    --primary-purple: #bd93f9;
+    --secondary-purple: #9580ff;
+    --text-color: #f8f8f2;
+    --white: #ffffff;
+    --error-red: #ff5555;
+    --success-green: #50fa7b;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Consolas', 'Monaco', 'Segoe UI', monospace;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+nav {
+    background-color: var(--surface-color);
+    padding: 1rem;
+    border-radius: 8px;
+    border-bottom: 2px solid var(--primary-purple);
+    margin-bottom: 20px;
+}
+
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--primary-purple);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--secondary-purple);
+    text-shadow: 0 0 8px var(--primary-purple);
+}
+
+.nav-logout-btn {
+    background: none;
+    border: 1px solid var(--primary-purple);
+    color: var(--primary-purple);
+    padding: 2px 10px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.nav-logout-btn:hover {
+    background: var(--primary-purple);
+    color: var(--bg-color);
+    box-shadow: 0 0 10px var(--primary-purple);
+}
+
+.nav-special {
+    color: var(--secondary-purple) !important;
+    border: 1px dashed var(--secondary-purple);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.nav-special:hover {
+    border-style: solid;
+    text-shadow: 0 0 5px var(--secondary-purple);
+}
+
+button, .btn {
+    background-color: transparent;
+    color: var(--primary-purple);
+    border: 1px solid var(--primary-purple);
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover, .btn:hover {
+    background-color: var(--primary-purple);
+    color: var(--bg-color);
+    box-shadow: 0 0 10px var(--primary-purple);
+}
+
+.messages {
+    list-style: none;
+    padding: 0;
+}
+
+.messages li {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    background-color: var(--surface-color);
+    border-left: 5px solid var(--primary-purple);
+}
+
+.messages li.success {
+    border-left-color: var(--success-green);
+}
+
+.messages li.error {
+    border-left-color: var(--error-red);
+}
+
+h1, h2, h3 {
+    color: var(--primary-purple);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+main {
+    background-color: var(--surface-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #6272a4;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--bg-color);
+}
+
+th {
+    background-color: var(--surface-color) !important;
+    color: var(--primary-purple) !important;
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid var(--primary-purple);
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #44475a;
+}
+
+tr:hover {
+    background-color: #383a59;
+}
+
+.btn-delete {
+    color: var(--error-red);
+    border-color: var(--error-red);
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border: 1px solid var(--error-red);
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: var(--error-red);
+    color: var(--white);
+    box-shadow: 0 0 10px var(--error-red);
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="datetime-local"], input[type="number"] {
+    background-color: var(--bg-color) !important;
+    border: 1px solid var(--primary-purple) !important;
+    color: var(--text-color) !important;
+    padding: 8px;
+    border-radius: 4px;
+    outline: none;
+}
+
+input:focus {
+    box-shadow: 0 0 5px var(--primary-purple);
+}
+.bootstrap-select .dropdown-menu {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.bootstrap-select .dropdown-menu li a {
+    color: var(--text-color);
+}
+
+.bootstrap-select .dropdown-menu li a:hover {
+    background-color: var(--surface-color);
+}
+
+.bootstrap-select .btn {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    border: 1px solid var(--primary-purple);
+}
+
+
+/* Global text color override for dark theme */
+body, body * {
+    color: var(--text-color) !important;
+}
+#deleteModal{{ order.pk }} .modal-content {
+    color: black !important;
+}
+
+#deleteModal{{ order.pk }} .modal-title {
+    color: black !important;
+}
+
+#deleteModal{{ order.pk }} .modal-body {
+    color: black !important;
+}
+.filter-light .form-control,
+.filter-light .form-select {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ccc !important;
+}
+
+.filter-light .form-control::placeholder {
+    color: #555 !important;
+}
+
+.filter-light option {
+    color: #000 !important;
+    background-color: #fff !important;
+}
